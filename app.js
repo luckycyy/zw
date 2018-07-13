@@ -16,11 +16,34 @@ App({
             success: res => {
               // 可以将 res 发送给后台解码出 unionId
               this.globalData.userInfo = res.userInfo
+              console.log('nickName:' + res.userInfo.nickName)
+
+              // 登录
+              wx.login({
+                success: res => {
+                  console.log('code:' + res.code)
+                  // 发送 res.code 到后台换取 openId, sessionKey, unionId
+                  if (res.code) {
+                    //发起网络请求
+                    wx.request({
+                      url: 'http://127.0.0.1:8011/wxmini/login',
+                      data: {
+                        code: res.code,
+                        nickname: this.globalData.userInfo.nickName,
+                        avatarUrl: this.globalData.userInfo.avatarUrl
+                      }
+                    })
+                  } else {
+                    console.log('登录失败！' + res.errMsg)
+                  }
+                }
+              })
 
               // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
               // 所以此处加入 callback 以防止这种情况
               if (this.userInfoReadyCallback) {
                 this.userInfoReadyCallback(res)
+                console.log('callback')
               }
             }
           })
@@ -28,28 +51,10 @@ App({
       }
     })
 
-    // 登录
-    wx.login({
-      success: res => {
-        console.log('code:' + res.code)
-        // 发送 res.code 到后台换取 openId, sessionKey, unionId
-        if (res.code) {
-          //发起网络请求
-          wx.request({
-            url: 'https://www.dataowenhua.com/wxmini/login',
-            data: {
-              code: res.code,
-              nickname: App.globalData.userInfo.nickName
-            }
-          })
-        } else {
-          console.log('登录失败！' + res.errMsg)
-        }
-      }
-    })
+    
     
   },
   globalData: {
-    userInfo: null
+    userInfo: "test22"
   }
 })
