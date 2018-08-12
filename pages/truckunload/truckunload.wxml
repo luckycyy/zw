@@ -1,0 +1,30 @@
+<!--pages/truckunload/truckunload.wxml-->
+<view class="table">
+  <view class="tr bg-w">
+    <view class="th">名称</view>
+    <view class="th">数量</view>
+    <view class="th">站点</view>
+    <view class="th">操作</view>
+  </view>
+  <block wx:for="{{items.data}}" wx:key="{{Id}}">
+    <view class="tr bg-g" wx:if="{{index % 2 == 0}}">
+      <view class="td">{{item.ProductName}}</view>
+      <view class="td">{{item.Num}}</view>
+      <view class="td">{{item.Station}}</view>
+      <view class="td">
+        <button wx:if="{{item.IsUnload == 0}}" data-id="{{index}}" size="mini" bindtap="clickUnload"> 卸车 </button>
+        <view wx:elif="{{item.IsUnload == 1}}"> 已卸 </view>
+      </view>
+
+    </view>
+    <view class="tr" wx:else>
+      <view class="td">{{item.ProductName}}</view>
+      <view class="td">{{item.Num}}</view>
+      <view class="td">{{item.Station}}</view>
+      <view class="td">
+        <button wx:if="{{item.IsUnload == 0}}" data-id="{{index}}" size="mini" bindtap="clickUnload"> 卸车 </button>
+        <view wx:elif="{{item.IsUnload == 1}}"> 已卸 </view>
+      </view>
+    </view>
+  </block>
+</view>

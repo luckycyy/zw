@@ -1,0 +1,85 @@
+<!--pages/staff/staff.wxml-->
+<view class="navbar">
+  <text wx:for="{{navbar}}" data-idx="{{index}}" class="item {{currentTab==index ? 'active' : ''}}" wx:key="unique" bindtap="navbarTap">{{item}}</text>
+</view>
+
+<!--访问审批-->
+<view hidden="{{currentTab!==0}}">
+
+  <view wx:if="{{!show}}" class="table">
+    <view class="tr bg-w">
+      <view class="th">姓名</view>
+      <view class="th">状态</view>
+
+    </view>
+    <block wx:for="{{items.data}}" wx:key="{{Id}}">
+      <view class="tr bg-g" wx:if="{{index % 2 == 0}}">
+        <view class="td">{{item.Username}}</view>
+        <view class="td">
+          <button wx:if="{{item.Status == 0}}" data-id="{{index}}" size="mini" bindtap="applyDetail"> 审批 </button>
+          <view wx:elif="{{item.Status == 1}}"> 审批通过 </view>
+          <view wx:elif="{{item.Status == 2}}"> 审批失败 </view>
+        </view>
+
+      </view>
+      <view class="tr" wx:else>
+        <view class="td">{{item.Username}}</view>
+        <view class="td">
+          <button wx:if="{{item.Status == 0}}" data-id="{{index}}" size="mini" bindtap="applyDetail"> 审批 </button>
+          <view wx:elif="{{item.Status == 1}}"> 审批通过 </view>
+          <view wx:elif="{{item.Status == 2}}"> 审批失败 </view>
+        </view>
+      </view>
+    </block>
+  </view>
+  <!--模态框-->
+  <view wx:if="{{show}}">
+    <!-- <view class="mask-content-container" wx:for="{{cols}}" wx:for-item="col" wx:for-index="col_index">
+      <text class="list-mask-title">{{titles[col_index]}}</text>
+      <input class="list-mask-input" type="text" value="{{col}}" data-id="{{col_index}}" bindblur="dataChange" />
+    </view> -->
+
+
+    <view>
+      <view class="weui-cells__title">申请信息</view>
+
+      <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell weui-cell_input">
+          姓名:
+          <input name="name" class="weui-input" maxlength="10" auto-focus placeholder="姓名" value="{{modalData.Username}}" />
+        </view>
+      </view>
+
+      <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell weui-cell_input">
+          手机:
+          <input name="tel" type="number" class="weui-input" maxlength="11" placeholder="手机号码" value="{{modalData.Tel}}" />
+        </view>
+      </view>
+
+      <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell weui-cell_input">
+          公司:
+          <input name="tel" class="weui-input" placeholder="公司" value="{{modalData.Company}}" />
+        </view>
+      </view>
+      <view class="weui-cells weui-cells_after-title weui-cell_select">
+        职务:
+        <picker class="weui-select:before weui-select" name="role" bindchange="bindPickerChange" value="{{pickerIndex}}" range="{{role}}">
+          <view class="picker weui-cell weui-cell_input">{{role[pickerIndex]}}
+          </view>
+        </picker>
+      </view>
+      <button class="btn btn-confirm" size="mini" type="primary" bindtap="permitApply">允许访问</button>
+      <button class="btn btn-cancle" size="mini" type="warn" bindtap="denyApply">拒绝访问</button>
+      <button class="btn btn-cancle" size="mini" type="default" bindtap="closeModel">返回</button>
+    </view>
+
+
+  </view>
+</view>
+
+<!--员工信息-->
+<view hidden="{{currentTab!==1}}">
+  待开发
+</view>

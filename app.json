@@ -1,12 +1,19 @@
 {
-  "pages":[
+  "pages": [
     "pages/index/index",
-    "pages/logs/logs"
+    "pages/logs/logs",
+    "pages/register/register",
+    "pages/staff/staff",
+    "pages/truckload/truckload",
+    "pages/truckunload/truckunload",
+    "pages/loadrecord/loadrecord",
+    "pages/inventory/inventory"
   ],
-  "window":{
-    "backgroundTextStyle":"light",
-    "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "WeChat",
-    "navigationBarTextStyle":"black"
+  "window": {
+    "navigationBarBackgroundColor": "#eaeaea",
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "钲旺管理平台",
+    "backgroundColor": "#eeeeee",
+    "backgroundTextStyle": "light"
   }
 }

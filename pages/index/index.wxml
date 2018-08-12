@@ -1,5 +1,5 @@
 <!--index.wxml-->
-<view class="container">
+<view wx:if="{{role != '待审核' }}" class="container">
   <view class="userinfo">
     <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
     <block wx:else>
@@ -7,7 +7,43 @@
       <text class="userinfo-nickname">{{userInfo.nickName}}</text>
     </block>
   </view>
-  <view class="usermotto">
-    <text class="user-motto">{{motto}}</text>
+
+  <view wx:if="{{role == 'unregister' }}" class="userapply">
+    <text>您还没有本系统的访问权</text>
+    <button class="apply" type="primary" bindtap="register">申请访问</button>
   </view>
+</view>
+
+<view wx:if="{{role == '待审核' }}" class="page">
+  <view class="weui-msg">
+    <view class="weui-msg__icon-area">
+      <icon type="success" size="93"></icon>
+    </view>
+    <view class="weui-msg__text-area">
+      <view class="weui-msg__title">已提交申请</view>
+      <view class="weui-msg__desc">请耐心等待管理员审核</view>
+    </view>
+    <!-- <view class="weui-msg__opr-area">
+      <view class="weui-btn-area">
+        <button class="weui-btn" type="primary" bindtap="refreshRole">刷新审核状态</button>
+      </view>
+    </view> -->
+
+  </view>
+</view>
+
+<view wx:if="true" class="page">
+  <view class="weui-msg">
+    <view class="weui-msg__text-area">
+      <view class="weui-msg__title">欢迎访问</view>
+      <view class="weui-msg__desc">有问题请联系管理员</view>
+    </view>
+  </view>
+</view>
+
+<!-- 底部标签显示 -->
+<view style="width:100%;height:100rpx; display:flex; flex-direction: row;justfy-content: center; border: 1rpx solid #eee; position: fixed; bottom:0; left:0;">
+  <view wx:if="{{role!='unregister'}}" style="width: {{tabWidth}};height:99rpx; text-align:center; line-height: 99rpx; border-right:1rpx solid #FFF;box-shadow: 1px 7px 6px #eee;color:#85C350" bindtap='tab1click'>{{tab1text}}</view>
+  <view wx:if="{{role!='unregister'}}" style="width: {{tabWidth}};height:99rpx; text-align:center; line-height: 99rpx;box-shadow: 1px 7px 6px #eee;" bindtap='tab2click'>{{tab2text}}</view>
+  <view wx:if="{{role=='职员'}}" style="width: {{tabWidth}};height:99rpx; text-align:center; line-height: 99rpx;box-shadow: 1px 7px 6px #eee;" bindtap='tab3click'>{{tab3text}}</view>
 </view>

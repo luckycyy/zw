@@ -1,0 +1,28 @@
+<!--pages/register/register.wxml-->
+
+<form bindsubmit="formSubmit">
+  <view class="weui-cells__title">申请信息</view>
+
+  <view class="weui-cells weui-cells_after-title">
+    <view class="weui-cell weui-cell_input">
+      <input name="name" class="weui-input" maxlength="10" auto-focus placeholder="姓名" />
+    </view>
+  </view>
+
+  <view class="weui-cells weui-cells_after-title">
+    <view class="weui-cell weui-cell_input">
+      <input name="tel" type="number" class="weui-input" maxlength="11" placeholder="手机号码" />
+    </view>
+  </view>
+
+  <view class="weui-cells weui-cells_after-title weui-cell_select">
+    <picker class="weui-select:before weui-select" name="company" bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
+      <view class="picker weui-cell weui-cell_input">所属公司:{{array[index]}}
+      </view>
+    </picker>
+  </view>
+
+  <view class="primary">
+    <button formType="submit">提交申请</button>
+  </view>
+</form>

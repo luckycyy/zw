@@ -1,12 +1,7 @@
 //app.js
 App({
-  onLaunch: function () {
-    // 展示本地存储能力
-    var logs = wx.getStorageSync('logs') || []
-    logs.unshift(Date.now())
-    wx.setStorageSync('logs', logs)
 
-
+  onLaunch: function() {
     // 获取用户信息
     wx.getSetting({
       success: res => {
@@ -26,11 +21,50 @@ App({
                   if (res.code) {
                     //发起网络请求
                     wx.request({
-                      url: 'http://127.0.0.1:8011/wxmini/login',
+                      url: this.globalData.serverUrl + '/wxmini/login',
                       data: {
                         code: res.code,
-                        nickname: this.globalData.userInfo.nickName,
+                        nickName: this.globalData.userInfo.nickName,
                         avatarUrl: this.globalData.userInfo.avatarUrl
+                      },
+                      success: function(res) {
+                        console.log("role:", res.data.Role, ",openid:", res.data.Openid, "username:", res.data.Username, "pickerItems:", res.data.PickerItems)
+                        
+
+                        if (res.data.Role == "") {
+                          console.log("res is empty")
+                        }
+                        wx.getLocation({
+                          type: 'wgs84',
+                          success: function(res) {
+                            var latitude = res.latitude
+                            var longitude = res.longitude
+                            var speed = res.speed
+                            var accuracy = res.accuracy
+                            wx.setStorageSync('location', {
+                              "latitude": latitude,
+                              "longitude": longitude,
+                              "speed": speed,
+                              "accuracy": accuracy
+                            })
+                            console.log("la:", wx.getStorageSync("location").latitude)
+                          }
+                        })
+                        try {
+                          wx.setStorageSync('role', res.data.Role)
+                          wx.setStorageSync('openid', res.data.Openid)
+                          wx.setStorageSync('username', res.data.Username)
+                          if (res.data.PickerItems!=""){
+                            var itemsJson = JSON.parse(res.data.PickerItems)
+                            wx.setStorageSync("productPicker", itemsJson[0])
+                            wx.setStorageSync("stationPicker", itemsJson[1])
+                          }
+                          
+                        } catch (e) {
+                          console.log("setStroge err,", e)
+                        }
+
+
                       }
                     })
                   } else {
@@ -45,16 +79,20 @@ App({
                 this.userInfoReadyCallback(res)
                 console.log('callback')
               }
+
+
+
             }
           })
         }
       }
     })
 
-    
-    
+
+
   },
   globalData: {
-    userInfo: "test22"
+    userInfo: null,
+    serverUrl: "http://127.0.0.1:8011"
   }
 })

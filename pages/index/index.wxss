@@ -1,4 +1,5 @@
 /**index.wxss**/
+@import "../lib/weui.wxss";
 .userinfo {
   display: flex;
   flex-direction: column;
@@ -16,6 +17,9 @@
   color: #aaa;
 }
 
-.usermotto {
+.roleinfo {
+  margin-top: 100px;
+}
+.apply {
   margin-top: 200px;
 }
