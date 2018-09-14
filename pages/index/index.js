@@ -52,7 +52,7 @@ Page({
       try {
         var value = wx.getStorageSync("role")
         console.log("role in storage is :" + value)
-        if (value == "unregister"){
+        if (value == "unregister"||value == "待审核"){
           that.setData({
             role: value
           })

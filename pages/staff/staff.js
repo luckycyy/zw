@@ -19,7 +19,11 @@ Page({
     modalData: 1,
     pickerIndex: 0,
     role: ["司机", "职员"],
-    selectedUserId: 0
+    selectedUserId: 0,
+    name: "",
+    tel: "",
+    company: "",
+    describe: ""
   },
 
   /**
@@ -132,7 +136,6 @@ Page({
   permitApply: function(e) {
     var that = this
     console.log("permitApply")
-
     wx.request({
       url: app.globalData.serverUrl + '/v1/apply/' + this.selectedUserId,
       header: {
@@ -154,6 +157,8 @@ Page({
             icon: 'success',
             duration: 2500
           })
+          
+          console.log("describe:" + that.data.describe)
           wx.request({
             url: app.globalData.serverUrl + '/v1/user',
             header: {
@@ -161,10 +166,11 @@ Page({
             },
             method: "POST",
             data: {
-              Username: that.data.modalData.Username,
+              Username: that.data.name,
               Openid: that.data.modalData.Openid,
-              "Tel": that.data.modalData.Tel,
-              "Company": that.data.modalData.Company,
+              "Tel": that.data.tel,
+              "Company": that.data.company,
+              "Describe": that.data.describe,
               "Role": that.data.role[that.data.pickerIndex]
             },
             //this.data.role[e.detail.value.role]
@@ -220,5 +226,26 @@ Page({
       show: false
     });
     //todo 发送
-  }
+  },
+ 
+  nameInput: function (e) {
+    this.setData({
+      name: e.detail.value
+    })
+  },
+  telInput: function (e) {
+    this.setData({
+      tel: e.detail.value
+    })
+  },
+  companyInput: function (e) {
+    this.setData({
+      company: e.detail.value
+    })
+  },
+  describeInput: function (e) {
+    this.setData({
+      describe: e.detail.value
+    })
+  },
 })

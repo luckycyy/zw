@@ -14,7 +14,7 @@
   </view>
 </view>
 
-<view wx:if="{{role == '待审核' }}" class="page">
+<view wx:if="{{role == '待审核'}}" class="page">
   <view class="weui-msg">
     <view class="weui-msg__icon-area">
       <icon type="success" size="93"></icon>
@@ -32,7 +32,7 @@
   </view>
 </view>
 
-<view wx:if="true" class="page">
+<view wx:if="{{false}}" class="page">
   <view class="weui-msg">
     <view class="weui-msg__text-area">
       <view class="weui-msg__title">欢迎访问</view>

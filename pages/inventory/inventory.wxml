@@ -1,5 +1,5 @@
 <!--pages/inventory/inventory.wxml-->
-<view class="table">
+<view  wx:if="{{!modelShow}}" class="table">
   <view class="tr bg-w">
     <view class="th">名称</view>
     <view class="th">数量</view>
@@ -12,7 +12,7 @@
       <view class="td">{{item.Num}}</view>
       <view class="td">{{item.Station}}</view>
       <view class="td">
-        <button  data-id="{{index}}" size="mini" bindtap="clickModify"> 修改 </button>
+        <button data-id="{{index}}" size="mini" bindtap="clickModify"> 修改 </button>
       </view>
 
     </view>
@@ -21,9 +21,38 @@
       <view class="td">{{item.Num}}</view>
       <view class="td">{{item.Station}}</view>
       <view class="td">
-        <button  data-id="{{index}}" size="mini" bindtap="clickModify"> 修改 </button>
+        <button data-id="{{index}}" size="mini" bindtap="clickModify"> 修改 </button>
       </view>
     </view>
   </block>
 </view>
-<button class="apply" type="primary" bindtap="addProduct">新增</button>
+<!--模态框-->
+<view wx:if="{{modelShow}}">
+  <view>
+    <view class="weui-cells__title">新增库存</view>
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell weui-cell_input">
+        名称:
+        <input name="name" class="weui-input" maxlength="10" auto-focus placeholder="请填写产品名称" bindinput="nameInput" />
+      </view>
+    </view>
+
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell weui-cell_input">
+        数量:
+        <input name="num" type="number" bindinput="numInput" class="weui-input" maxlength="11" placeholder="请填写数量" />
+      </view>
+    </view>
+
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell weui-cell_input">
+        站点:
+        <input name="station" class="weui-input" bindinput="stationInput" placeholder="请填写站点"  />
+      </view>
+    </view>
+    
+    <button class="btn btn-confirm" size="mini" type="primary" bindtap="add">添加</button>
+    <button class="btn btn-cancle" size="mini" type="default" bindtap="back">返回</button>
+  </view>
+</view>
+<button  wx:if="{{!modelShow}}" class="apply" type="primary" bindtap="addProduct">新增</button>

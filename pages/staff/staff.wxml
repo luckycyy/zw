@@ -46,21 +46,21 @@
       <view class="weui-cells weui-cells_after-title">
         <view class="weui-cell weui-cell_input">
           姓名:
-          <input name="name" class="weui-input" maxlength="10" auto-focus placeholder="姓名" value="{{modalData.Username}}" />
+          <input name="name" class="weui-input" maxlength="10" auto-focus placeholder="姓名" value="{{modalData.Username}}" bindinput="nameInput" />
         </view>
       </view>
 
       <view class="weui-cells weui-cells_after-title">
         <view class="weui-cell weui-cell_input">
           手机:
-          <input name="tel" type="number" class="weui-input" maxlength="11" placeholder="手机号码" value="{{modalData.Tel}}" />
+          <input name="tel" type="number" bindinput="telInput" class="weui-input" maxlength="11" placeholder="手机号码" value="{{modalData.Tel}}" />
         </view>
       </view>
 
       <view class="weui-cells weui-cells_after-title">
         <view class="weui-cell weui-cell_input">
           公司:
-          <input name="tel" class="weui-input" placeholder="公司" value="{{modalData.Company}}" />
+          <input name="company" class="weui-input" bindinput="companyInput" placeholder="公司" value="{{modalData.Company}}" />
         </view>
       </view>
       <view class="weui-cells weui-cells_after-title weui-cell_select">
@@ -69,6 +69,12 @@
           <view class="picker weui-cell weui-cell_input">{{role[pickerIndex]}}
           </view>
         </picker>
+      </view>
+      <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell weui-cell_input">
+          车号:
+          <input name="describe" class="weui-input" bindinput="describeInput" placeholder="填写司机车号" value="{{data.modalData.Describe}}" />
+        </view>
       </view>
       <button class="btn btn-confirm" size="mini" type="primary" bindtap="permitApply">允许访问</button>
       <button class="btn btn-cancle" size="mini" type="warn" bindtap="denyApply">拒绝访问</button>
