@@ -33,7 +33,9 @@ Page({
       url: app.globalData.serverUrl + '/v1/load_record',
       data: {
         limit: -1,
-        query: "creator:" + wx.getStorageSync("username")
+        query: "creator:" + wx.getStorageSync("username"),
+        sortby: "create_time",
+        order: "desc",
       },
       success: function(res) {
         console.log("load_record:", res)

@@ -54,6 +54,7 @@ App({
                           wx.setStorageSync('role', res.data.Role)
                           wx.setStorageSync('openid', res.data.Openid)
                           wx.setStorageSync('username', res.data.Username)
+                          wx.setStorageSync('describe', res.data.Describe)
                           if (res.data.PickerItems!=""){
                             var itemsJson = JSON.parse(res.data.PickerItems)
                             wx.setStorageSync("productPicker", itemsJson[0])

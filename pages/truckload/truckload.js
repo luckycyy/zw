@@ -62,7 +62,7 @@ Page({
 
         method: "POST",
 
-        data: { Station: this.data.stations[e.detail.value.station], ProductName: this.data.products[e.detail.value.productName], Num: e.detail.value.num, Creator: wx.getStorageSync("username"), Location: l_str},
+        data: { Station: this.data.stations[e.detail.value.station], ProductName: this.data.products[e.detail.value.productName], Num: e.detail.value.num, Describe: wx.getStorageSync("describe"),Creator: wx.getStorageSync("username"), Location: l_str},
 
         success: function (res) {
 

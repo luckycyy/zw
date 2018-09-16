@@ -48,7 +48,9 @@ Page({
     wx.request({
       url: app.globalData.serverUrl + '/v1/apply',
       data: {
-        limit: -1
+        limit: -1,
+        sortby: "create_time",
+        order: "desc",
       },
       success: function(res) {
         console.log("applys:", res)

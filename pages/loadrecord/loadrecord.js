@@ -62,6 +62,8 @@ Page({
       url: app.globalData.serverUrl + '/v1/load_record',
       data: {
         limit: -1,
+        sortby: "create_time",
+        order: "desc",
       },
       success: function(res) {
         console.log("load_record:", res)
@@ -293,6 +295,8 @@ Page({
       url: app.globalData.serverUrl + '/v1/load_record',
       data: {
         limit: -1,
+        sortby: "create_time",
+        order: "desc",
       },
       success: function(res) {
         console.log("load_record:", res)
