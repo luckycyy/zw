@@ -29,29 +29,30 @@
 <!--模态框-->
 <view wx:if="{{modelShow}}">
   <view>
-    <view class="weui-cells__title">新增库存</view>
+    <view class="weui-cells__title">{{title}}</view>
     <view class="weui-cells weui-cells_after-title">
       <view class="weui-cell weui-cell_input">
         名称:
-        <input name="name" class="weui-input" maxlength="10" auto-focus placeholder="请填写产品名称" bindinput="nameInput" />
+        <input name="name" class="weui-input" maxlength="10" auto-focus placeholder="请填写产品名称" value="{{name}}" bindinput="nameInput" />
       </view>
     </view>
 
     <view class="weui-cells weui-cells_after-title">
       <view class="weui-cell weui-cell_input">
         数量:
-        <input name="num" type="number" bindinput="numInput" class="weui-input" maxlength="11" placeholder="请填写数量" />
+        <input name="num" type="number" bindinput="numInput" class="weui-input" maxlength="11" value="{{num}}" placeholder="请填写数量" />
       </view>
     </view>
 
     <view class="weui-cells weui-cells_after-title">
       <view class="weui-cell weui-cell_input">
         站点:
-        <input name="station" class="weui-input" bindinput="stationInput" placeholder="请填写站点"  />
+        <input name="station" class="weui-input" bindinput="stationInput" value="{{station}}" placeholder="请填写站点"  />
       </view>
     </view>
-    
-    <button class="btn btn-confirm" size="mini" type="primary" bindtap="add">添加</button>
+
+    <button class="btn btn-confirm" size="mini" type="primary" bindtap="confirm">{{btnText}}</button>
+    <button wx:if="{{'保存'==btnText}}" class="btn " size="mini" type="warn" bindtap="del">删除</button>
     <button class="btn btn-cancle" size="mini" type="default" bindtap="back">返回</button>
   </view>
 </view>
