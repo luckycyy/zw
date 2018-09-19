@@ -1,112 +1,113 @@
 <!--pages/loadrecord/loadrecord.wxml-->
 
-<view class='animation' animation="{{animationData}}" style="height:100%;position:fixed;visibility:{{show ? 'visible':'hidden'}}">
-  <form bindsubmit="searchSubmit">
-    <view class='animation-content'>
-      <view class='pricezone'>
-        <view class='pztitle'>
-          <text>按日期查询</text>
-        </view>
-        <view class='inputzone'>
-          <view class="section">
-            <picker mode="date" name="startDate" value="{{startDate}}" start="2016-09-16" end="2028-01-01" bindchange="startDateChange">
-              <view class="picker">
-                开始日期: {{startDate}}
-              </view>
-            </picker>
+  <view class='animation' animation="{{animationData}}" style="height:100%;position:fixed;visibility:{{show ? 'visible':'hidden'}}">
+    <form bindsubmit="searchSubmit">
+      <view class='animation-content'>
+        <view class='pricezone'>
+          <view class='pztitle'>
+            <text>按日期查询</text>
           </view>
-          <view class="section">
-            <picker mode="date" name="endDate" value="{{endDate}}" start="2016-09-16" end="2028-01-01" bindchange="endDateChange">
-              <view class="picker">
-                结束日期: {{endDate}}
-              </view>
-            </picker>
-          </view>
+          <view class='inputzone'>
+            <view class="section">
+              <picker mode="date" name="startDate" value="{{startDate}}" start="2016-09-16" end="2028-01-01" bindchange="startDateChange">
+                <view class="picker">
+                  开始日期: {{startDate}}
+                </view>
+              </picker>
+            </view>
+            <view class="section">
+              <picker mode="date" name="endDate" value="{{endDate}}" start="2016-09-16" end="2028-01-01" bindchange="endDateChange">
+                <view class="picker">
+                  结束日期: {{endDate}}
+                </view>
+              </picker>
+            </view>
 
-          <view class='pztitle'>
-            <text>按车号查询</text>
-            <input name="describe" class="weui-input" maxlength="10" auto-focus placeholder="请输入车辆号码"  bindinput="describeInput" />
+            <view class='pztitle'>
+              <text>按车号查询</text>
+              <input name="describe" class="weui-input" maxlength="10" placeholder="请输入车辆号码" bindinput="describeInput" />
+            </view>
+            <view class='pztitle'>
+              <text>按司机查询</text>
+              <input name="driver" class="weui-input" maxlength="10" placeholder="请输入司机姓名" bindinput="driverInput" />
+            </view>
+            <view class='pztitle'>
+              <text>按产品查询</text>
+              <input name="productName" class="weui-input" maxlength="10" placeholder="请输入产品名称" bindinput="productNameInput" />
+            </view>
+            <view class='pztitle'>
+              <text>按站点查询</text>
+              <input name="station" class="weui-input" maxlength="10" placeholder="请输入站点名称" bindinput="stationInput" />
+            </view>
+            <button size="default" bindtap="confirm">确定</button>
+            <button size="default" bindtap="back"> 返回 </button>
           </view>
-          <view class='pztitle'>
-            <text>按司机查询</text>
-            <input name="driver" class="weui-input" maxlength="10" auto-focus placeholder="请输入司机姓名"  bindinput="driverInput" />
-          </view>
-          <view class='pztitle'>
-            <text>按产品查询</text>
-            <input name="productName" class="weui-input" maxlength="10" auto-focus placeholder="请输入产品名称"  bindinput="productNameInput" />
-          </view>
-          <view class='pztitle'>
-            <text>按站点查询</text>
-            <input name="station" class="weui-input" maxlength="10" auto-focus placeholder="请输入站点名称"  bindinput="stationInput" />
-          </view>
-          <button size="default" bindtap="confirm">确定</button>
-          <button size="default" bindtap="back"> 返回 </button>
         </view>
       </view>
+    </form>
+  </view>
+
+
+  <view wx:if="{{!modelShow}}" class="table">
+    <view class="tr bg-w">
+      <view class="th">车号</view>
+      <view class="th">名称</view>
+      <view class="th">数量</view>
+      <view class="th">站点</view>
+      <view class="th">
+        <button size="mini" bindtap="filter"> 查询 </button>
+      </view>
     </view>
-  </form>
-</view>
+    <block wx:for="{{items.data}}" wx:key="{{Id}}">
+      <view class="tr bg-g" wx:if="{{index % 2 == 0}}">
+        <view class="td">{{item.Describe}}</view>
+        <view class="td">{{item.ProductName}}</view>
+        <view class="td">{{item.Num}}</view>
+        <view class="td">{{item.Station}}</view>
+        <view class="td">
+          <button data-id="{{index}}" size="mini" bindtap="clickModify"> 详情 </button>
+        </view>
 
+      </view>
+      <view class="tr" wx:else>
+        <view class="td">{{item.Describe}}</view>
+        <view class="td">{{item.ProductName}}</view>
+        <view class="td">{{item.Num}}</view>
+        <view class="td">{{item.Station}}</view>
+        <view class="td">
+          <button data-id="{{index}}" size="mini" bindtap="clickModify"> 详情 </button>
+        </view>
+      </view>
+    </block>
+  </view>
 
-<view wx:if="{{!modelShow}}" class="table">
-  <view class="tr bg-w">
-    <view class="th">车号</view>
-    <view class="th">名称</view>
-    <view class="th">数量</view>
-    <view class="th">站点</view>
-    <view class="th">
-      <button size="mini" bindtap="filter"> 查询 </button>
+  <view wx:if="{{modelShow}}">
+    <view>
+      <view class="weui-cells__title">{{title}}</view>
+
+      <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell weui-cell_input">
+          名称:
+          <input name="m_name" class="weui-input" maxlength="10" auto-focus placeholder="请填写产品名称" value="{{m_productName}}" bindinput="m_productNameInput" />
+        </view>
+      </view>
+
+      <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell weui-cell_input">
+          数量:
+          <input name="m_num" type="number" bindinput="m_numInput" class="weui-input" maxlength="11" value="{{m_num}}" placeholder="请填写数量" />
+        </view>
+      </view>
+
+      <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell weui-cell_input">
+          站点:
+          <input name="m_station" class="weui-input" bindinput="m_stationInput" value="{{m_station}}" placeholder="请填写站点" />
+        </view>
+      </view>
+
+      <button class="btn btn-confirm" size="mini" type="primary" bindtap="saveModify">修改</button>
+      <button class="btn btn-cancle" size="mini" type="default" bindtap="modalBack">返回</button>
+      <map id="map" longitude="{{startLongitude}}" latitude="{{startLatitude}}" scale="14" markers="{{markers}}" show-location style="width: 100%; height: 100vh;"></map>
     </view>
   </view>
-  <block wx:for="{{items.data}}" wx:key="{{Id}}">
-    <view class="tr bg-g" wx:if="{{index % 2 == 0}}">
-      <view class="td">{{item.Describe}}</view>
-      <view class="td">{{item.ProductName}}</view>
-      <view class="td">{{item.Num}}</view>
-      <view class="td">{{item.Station}}</view>
-      <view class="td">
-        <button data-id="{{index}}" size="mini" bindtap="clickModify"> 修改 </button>
-      </view>
-
-    </view>
-    <view class="tr" wx:else>
-      <view class="td">{{item.Describe}}</view>
-      <view class="td">{{item.ProductName}}</view>
-      <view class="td">{{item.Num}}</view>
-      <view class="td">{{item.Station}}</view>
-      <view class="td">
-        <button data-id="{{index}}" size="mini" bindtap="clickModify"> 修改 </button>
-      </view>
-    </view>
-  </block>
-</view>
-
-<view wx:if="{{modelShow}}">
-  <view>
-    <view class="weui-cells__title">{{title}}</view>
-    
-    <view class="weui-cells weui-cells_after-title">
-      <view class="weui-cell weui-cell_input">
-        名称:
-        <input name="m_name" class="weui-input" maxlength="10" auto-focus placeholder="请填写产品名称" value="{{m_productName}}" bindinput="m_productNameInput" />
-      </view>
-    </view>
-
-    <view class="weui-cells weui-cells_after-title">
-      <view class="weui-cell weui-cell_input">
-        数量:
-        <input name="m_num" type="number" bindinput="m_numInput" class="weui-input" maxlength="11" value="{{m_num}}" placeholder="请填写数量" />
-      </view>
-    </view>
-
-    <view class="weui-cells weui-cells_after-title">
-      <view class="weui-cell weui-cell_input">
-        站点:
-        <input name="m_station" class="weui-input" bindinput="m_stationInput" value="{{m_station}}" placeholder="请填写站点"  />
-      </view>
-    </view>
-
-    <button class="btn btn-confirm" size="mini" type="primary" bindtap="saveModify">保存</button>
-    <button class="btn btn-cancle" size="mini" type="default" bindtap="modalBack">返回</button>
-  </view>
-</view>

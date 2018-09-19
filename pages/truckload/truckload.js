@@ -67,7 +67,6 @@ Page({
         success: function (res) {
 
           if (res.data.Code == 1) {
-
             wx.showModal({
               title: '成功',
               showCancel : false ,
@@ -81,7 +80,17 @@ Page({
               }
             })
             
-          } else {
+          } else if (res.data.Code == 2){
+            wx.showToast({
+
+              title: "站点没有此产品",
+
+              icon: 'fail',
+
+              duration: 3500
+
+            })
+          }else{
             wx.showToast({
 
               title: "提交失败",

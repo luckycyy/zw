@@ -41,7 +41,7 @@
 
 
     <view>
-      <view class="weui-cells__title">申请信息</view>
+      <view class="weui-cells__title">申请信息(可编辑修改)</view>
 
       <view class="weui-cells weui-cells_after-title">
         <view class="weui-cell weui-cell_input">

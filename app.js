@@ -94,6 +94,6 @@ App({
   },
   globalData: {
     userInfo: null,
-    serverUrl: "http://127.0.0.1:8011"
+    serverUrl: "http://101.201.71.156:8011"
   }
 })

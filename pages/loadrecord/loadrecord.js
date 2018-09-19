@@ -22,7 +22,11 @@ Page({
     m_productName: "",
     m_num: "",
     m_station: "",
-
+    markers: "",
+    startLongitude: "",
+    startLatitude: "",
+    endLongitude: "",
+    endLatitude: "",
   },
   startDateChange: function(e) {
     console.log(e.detail.value)
@@ -71,7 +75,7 @@ Page({
           console.log("res is empty")
         }
         that.setData({
-          items: res
+          items: res,
         })
 
       }
@@ -210,19 +214,84 @@ Page({
     })
 
   },
-  clickModify: function(e) { //点击筛选事件
+  clickModify: function(e) {
     let id = e.target.dataset.id;
     console.log("index:" + id)
     this.selectedRecordId = this.data.items.data[id].Id
     console.log("selectedRecordId:" + this.selectedRecordId)
-    //产品id已选出put修改
+    var vStartLongitude = ""
+    var vStartLatitude = ""
+    var vEndLongitude = ""
+    var vEndLatitude = ""
+    try {
+      vStartLongitude = JSON.parse(this.data.items.data[id].Location).longitude //装车经度
+      vStartLatitude = JSON.parse(this.data.items.data[id].Location).latitude
+      vEndLongitude = JSON.parse(this.data.items.data[id].Location2).longitude //卸车经度
+      vEndLatitude = JSON.parse(this.data.items.data[id].Location2).latitude
+    } catch (err) {
+      console.log(err)
+    }
+    console.log("StartLongitude:" + vStartLongitude)
+    console.log("StartLatitude:" + vStartLatitude)
+    console.log("EndLongitude:" + vEndLongitude)
+    console.log("EndLatitude:" + vEndLatitude)
+    var currentMakers = []
+    if (("" != vStartLongitude) && ("" != vStartLatitude)) {
+      var startMaker = {
+        iconPath: "static/red.png",
+        id: 0,
+        width: 50,
+        height: 50,
+        title: "装车位置",
+        callout: {
+          content: "装车位置",
+          fontSize: 14,
+          color: "#000",
+          padding: 8,
+          bgColor: "#CCCCCC",
+          borderRadius: 4,
+          display: "ALWAYS"
+        }
+      }
+      startMaker.latitude = vStartLatitude
+      startMaker.longitude = vStartLongitude
+      currentMakers.push(startMaker)
+    }
+    if (("" != vEndLongitude) && ("" != vEndLatitude)) {
+      var endMaker = {
+        iconPath: "static/green.png",
+        id: 1,
+        width: 50,
+        height: 50,
+        title: "卸车位置",
+        callout: {
+          content: "卸车位置",
+          fontSize: 14,
+          color: "#000",
+          padding: 8,
+          bgColor: "#CCCCCC",
+          borderRadius: 4,
+          display: "ALWAYS"
+        }
+      }
+      endMaker.latitude = vEndLatitude
+      endMaker.longitude = vEndLongitude
+      currentMakers.push(endMaker)
+    }
+    var creator = this.data.items.data[id].Creator
+    var datetime = this.data.items.data[id].CreateTime
+    datetime = datetime.replace("T", " ")
+    datetime = datetime.split("+", 1)[0]
     this.setData({
       modelShow: true,
-      title: "修改装卸车记录",
+      title: "装车时间:" + datetime + " 司机:" + creator,
       m_productName: this.data.items.data[id].ProductName,
       m_num: this.data.items.data[id].Num,
       m_station: this.data.items.data[id].Station,
-      selectedRecordId: this.data.items.data[id].Id
+      selectedRecordId: this.data.items.data[id].Id,
+      startLongitude: vStartLongitude,
+      startLatitude: vStartLatitude,
+      markers: currentMakers,
     });
   },
 
@@ -268,17 +337,17 @@ Page({
 
 
   },
-  m_productNameInput: function (e) {
+  m_productNameInput: function(e) {
     this.setData({
       m_productName: e.detail.value
     })
   },
-  m_numInput: function (e) {
+  m_numInput: function(e) {
     this.setData({
       m_num: e.detail.value
     })
   },
-  m_stationInput: function (e) {
+  m_stationInput: function(e) {
     this.setData({
       m_station: e.detail.value
     })
@@ -289,7 +358,11 @@ Page({
   goback: function() {
     var that = this
     this.setData({
-      modelShow: false
+      modelShow: false,
+      startLongitude: "",
+      startLatitude: "",
+      endLongitude: "",
+      endLatitude: "",
     });
     wx.request({
       url: app.globalData.serverUrl + '/v1/load_record',

@@ -183,6 +183,30 @@ Page({
                   icon: 'success',
                   duration: 2500
                 })
+                
+                wx.request({
+                  url: app.globalData.serverUrl + '/v1/apply',
+                  data: {
+                    limit: -1,
+                    sortby: "create_time",
+                    order: "desc",
+                  },
+                  success: function (res) {
+                    console.log("applys:", res)
+                    if (res == "") {
+                      console.log("res is empty")
+                    }
+                    that.setData({
+                      items: res
+                    })
+
+                  }
+                })
+                that.setData({
+                  show: false,
+                })
+
+
                 //wx.setStorageSync('role', 100)//设置角色待审批
               } else {
                 wx.showToast({
