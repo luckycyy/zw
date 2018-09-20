@@ -40,7 +40,7 @@
     <view class="weui-cells weui-cells_after-title">
       <view class="weui-cell weui-cell_input">
         数量:
-        <input name="num" type="number" bindinput="numInput" class="weui-input" maxlength="11" value="{{num}}" placeholder="请填写数量" />
+        <input name="num" type="digit" bindinput="numInput" class="weui-input" maxlength="11" value="{{num}}" placeholder="请填写数量" />
       </view>
     </view>
 
