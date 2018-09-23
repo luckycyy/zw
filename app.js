@@ -7,6 +7,7 @@ App({
       success: res => {
         if (res.authSetting['scope.userInfo']) {
           // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
+          console.log('已经授权')
           wx.getUserInfo({
             success: res => {
               // 可以将 res 发送给后台解码出 unionId
@@ -27,16 +28,16 @@ App({
                         nickName: this.globalData.userInfo.nickName,
                         avatarUrl: this.globalData.userInfo.avatarUrl
                       },
-                      success: function(res) {
+                      success: function (res) {
                         console.log("role:", res.data.Role, ",openid:", res.data.Openid, "username:", res.data.Username, "pickerItems:", res.data.PickerItems)
-                        
+
 
                         if (res.data.Role == "") {
                           console.log("res is empty")
                         }
                         wx.getLocation({
                           type: 'wgs84',
-                          success: function(res) {
+                          success: function (res) {
                             var latitude = res.latitude
                             var longitude = res.longitude
                             var speed = res.speed
@@ -55,12 +56,12 @@ App({
                           wx.setStorageSync('openid', res.data.Openid)
                           wx.setStorageSync('username', res.data.Username)
                           wx.setStorageSync('describe', res.data.Describe)
-                          if (res.data.PickerItems!=""){
+                          if (res.data.PickerItems != "") {
                             var itemsJson = JSON.parse(res.data.PickerItems)
                             wx.setStorageSync("productPicker", itemsJson[0])
                             wx.setStorageSync("stationPicker", itemsJson[1])
                           }
-                          
+
                         } catch (e) {
                           console.log("setStroge err,", e)
                         }
@@ -78,13 +79,15 @@ App({
               // 所以此处加入 callback 以防止这种情况
               if (this.userInfoReadyCallback) {
                 this.userInfoReadyCallback(res)
-                console.log('callback')
+                console.log('appcallback')
               }
 
 
 
             }
           })
+        }else{
+          console.log('未授权')
         }
       }
     })
