@@ -87,5 +87,31 @@
 
 <!--员工信息-->
 <view hidden="{{currentTab!==1}}">
-  待开发
+  <view  class="table">
+    <view class="tr bg-w">
+      <view class="th">姓名</view>
+      <view class="th">角色</view>
+      <view class="th">微信名</view>
+      <view class="th">操作</view>
+    </view>
+    <block wx:for="{{users.data}}" wx:key="{{Id}}">
+      <view class="tr bg-g" wx:if="{{index % 2 == 0}}">
+        <view class="td">{{item.Username}}</view>
+        <view class="td">{{item.Role}}</view>
+        <view class="td">{{item.Nickname}}</view>
+        <view class="td">
+          <button data-id="{{index}}" size="mini" bindtap="delUser"> 删除 </button>
+        </view>
+
+      </view>
+      <view class="tr" wx:else>
+        <view class="td">{{item.Username}}</view>
+        <view class="td">{{item.Role}}</view>
+        <view class="td">{{item.Nickname}}</view>
+        <view class="td">
+          <button data-id="{{index}}" size="mini" bindtap="delUser"> 删除 </button>
+        </view>
+      </view>
+    </block>
+  </view>
 </view>

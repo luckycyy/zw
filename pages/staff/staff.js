@@ -23,7 +23,8 @@ Page({
     name: "",
     tel: "",
     company: "",
-    describe: ""
+    describe: "",
+    users:""
   },
 
   /**
@@ -59,6 +60,24 @@ Page({
         }
         that.setData({
           items: res
+        })
+
+      }
+    })
+    wx.request({
+      url: app.globalData.serverUrl + '/v1/user',
+      data: {
+        limit: -1,
+        sortby: "create_time",
+        order: "desc",
+      },
+      success: function (res) {
+        console.log("users:", res)
+        if (res == "") {
+          console.log("res is empty")
+        }
+        that.setData({
+          users: res
         })
 
       }
@@ -272,6 +291,99 @@ Page({
   describeInput: function (e) {
     this.setData({
       describe: e.detail.value
+    })
+  },
+  delUser: function (e) {
+    console.log("del modal:")
+    var that = this
+    let id = e.target.dataset.id;
+    var selectedUserId = this.data.users.data[id].Id
+    var selectedOpenId = this.data.users.data[id].Openid
+    console.log("selectedUserId:" + selectedUserId)
+    console.log("selectedOpenId:" + selectedOpenId)
+    wx.showModal({
+      title: '警告',
+      content: '确定要删除此用户吗?',
+      success: function (res) {
+        if (res.confirm) {
+          wx.request({
+            url: app.globalData.serverUrl + '/v1/user/' + selectedUserId,
+            header: {
+              "Content-Type": "application/json;charset=utf-8"
+            },
+            method: "DELETE",
+
+            success: function (res) {
+              if (res.data == 'OK') {
+                wx.showToast({
+                  title: "操作成功",
+                  icon: 'success',
+                  duration: 2500
+                })
+              } else {
+                wx.showToast({
+                  title: "操作失败",
+                  icon: 'fail',
+                  duration: 2500
+                })
+              }
+              
+              wx.request({
+                url: app.globalData.serverUrl + '/v1/apply',
+                data: {
+                  limit: -1,
+                  sortby: "create_time",
+                  order: "desc",
+                },
+                success: function (res) {
+                  console.log("applys:", res)
+                  if (res == "") {
+                    console.log("res is empty")
+                  }
+                  that.setData({
+                    items: res
+                  })
+
+                }
+              })
+              wx.request({
+                url: app.globalData.serverUrl + '/v1/user',
+                data: {
+                  limit: -1,
+                  sortby: "create_time",
+                  order: "desc",
+                },
+                success: function (res) {
+                  console.log("users:", res)
+                  if (res == "") {
+                    console.log("res is empty")
+                  }
+                  that.setData({
+                    users: res
+                  })
+
+                }
+              })
+
+            },
+            fail: function () {
+              wx.showToast({
+                title: '服务器网络错误!',
+                icon: 'loading',
+                duration: 2500
+              })
+
+            }
+          })
+          wx.request({
+            url: app.globalData.serverUrl + '/v1/apply/' + selectedOpenId,
+            header: {
+              "Content-Type": "application/json;charset=utf-8"
+            },
+            method: "DELETE"
+          })
+        }
+      }
     })
   },
 })
