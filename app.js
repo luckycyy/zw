@@ -97,6 +97,6 @@ App({
   },
   globalData: {
     userInfo: null,
-    serverUrl: "http://39.105.74.138:8011"
+    serverUrl: "https://www.dataowenhua.com:80"
   }
 })
