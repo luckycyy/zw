@@ -97,6 +97,6 @@ App({
   },
   globalData: {
     userInfo: null,
-    serverUrl: "https://www.dataowenhua.com:80"
+    serverUrl: "https://www.dataowenhua.com"
   }
 })
